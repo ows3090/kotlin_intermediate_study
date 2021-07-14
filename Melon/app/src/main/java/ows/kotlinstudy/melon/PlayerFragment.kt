@@ -1,9 +1,7 @@
 package ows.kotlinstudy.melon
 
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.util.TimeUtils
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
@@ -13,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.gson.Gson
 import ows.kotlinstudy.melon.databinding.FragmentPlayerBinding
 import ows.kotlinstudy.melon.service.MusicDto
 import ows.kotlinstudy.melon.service.MusicService
@@ -24,12 +21,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class PlayerFragment : Fragment(R.layout.fragment_player) {
+class PlayerFragment: Fragment(R.layout.fragment_player) {
 
     private var model: PlayerModel = PlayerModel()
     private var binding: FragmentPlayerBinding? = null
     private var player: SimpleExoPlayer? = null
     private lateinit var playListAdpater: PlayListAdapter
+    private var pid: Int? = null
 
     private val updateSeekRunnable = Runnable {
         updateSeek()
