@@ -31,10 +31,16 @@
 	- OnMapReadyCallback
 	- Marker
 	- CameraUpdateFatory
+
 2. LocationManager
 	- Permission : ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION
+
 3. Retrofit + Coroutine
 	- CorotineScope
+
+<br>
+
+
 	- Job
 	- Dispatchers IO, Main
 
