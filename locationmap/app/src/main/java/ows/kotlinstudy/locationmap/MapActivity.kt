@@ -59,7 +59,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
         if (::searchResult.isInitialized.not()) {
             intent?.let {
-                searchResult = it.getParcelableExtra<SearchResultEntity>(SEARCH_RESULT_EXTRA_KEY)
+                searchResult = it.getParcelableExtra(SEARCH_RESULT_EXTRA_KEY)
                     ?: throw Exception("데이터가 존재하지 않습니다")
                 setupGoogleMap()
             }
@@ -87,13 +87,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
     private fun setupMarker(searchResultEntity: SearchResultEntity): Marker {
         val positionLatLng = LatLng(
-            searchResult.locationLatLng.latitude.toDouble(),
-            searchResult.locationLatLng.longitude.toDouble()
+            searchResultEntity.locationLatLng.latitude.toDouble(),
+            searchResultEntity.locationLatLng.longitude.toDouble()
         )
         val markerOptions = MarkerOptions().apply {
             position(positionLatLng)
-            title(searchResult.name)
-            snippet(searchResult.fullAddress)
+            title(searchResultEntity.name)
+            snippet(searchResultEntity.fullAddress)
         }
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(positionLatLng, CAMERA_ZOOM_LEVEL))
 
@@ -151,14 +151,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
     }
 
     private fun onCurrentLocationChanged(locationLatLngEntity: LocationLatLngEntity) {
-//        map.moveCamera(
-//            CameraUpdateFactory.newLatLngZoom(
-//                LatLng(
-//                    locationLatLngEntity.latitude.toDouble(),
-//                    locationLatLngEntity.longitude.toDouble()
-//                ), CAMERA_ZOOM_LEVEL
-//            )
-//        )
+        map.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                LatLng(
+                    locationLatLngEntity.latitude.toDouble(),
+                    locationLatLngEntity.longitude.toDouble()
+                ), CAMERA_ZOOM_LEVEL
+            )
+        )
         loadReverseGeoInformation(locationLatLngEntity)
         removeLocationListener()
     }
