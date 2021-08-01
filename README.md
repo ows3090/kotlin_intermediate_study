@@ -37,16 +37,21 @@
 
 3. Retrofit + Coroutine
 	- CorotineScope
-
-<br>
-
-
 	- Job
 	- Dispatchers IO, Main
 
 <br>
 
+## OTT
 
-
-
+1. MotionLayout
+2. [AppBarLayout](https://developer.android.com/reference/com/google/android/material/appbar/AppBarLayout)
+   - Material design
+   - setScrollFlags
+3. [CollapsingToolbarLayout](https://developer.android.com/reference/com/google/android/material/appbar/CollapsingToolbarLayout?hl=en)
+   - Content scrim
+   - Status bar scrim
+4. [CoordinatorLayout](https://developer.android.com/reference/androidx/coordinatorlayout/widget/CoordinatorLayout)
+   - Behaviors
+   - Inset
 
