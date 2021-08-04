@@ -64,3 +64,16 @@
 
    - Inset
 
+<br>
+
+## Dust
+
+1. [LocationManager](https://developer.android.com/reference/android/location/LocationManager)
+   - ACCESS_COARSE_LOCATION
+   - ACCESS_FINE_LOCATION
+2. Retrofit2
+3. Coroutine
+4. [App Widgets](https://developer.android.com/guide/topics/appwidgets)
+   - AppWidgetProviderInfo
+   - AppWidgetProvider
+   - Layout
