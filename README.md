@@ -2,16 +2,20 @@
 ## Youtube
 
 1. [MotionLayout](https://developer.android.com/training/constraint-layout/motionlayout/examples?hl=ko)
-	- ConstraintLayout Library SubClass
-	- Layout transition, Animation
-	- MotionScnen : Transition, KeyFrameSet, ConstraintSet, OnSwipe
+
+  - ConstraintLayout Library SubClass
+
+  - Layout transition, Animation
+  - MotionScnen : Transition, KeyFrameSet, ConstraintSet, OnSwipe
 
 2. [Exoplayer](https://developer.android.com/guide/topics/media/exoplayer?hl=ko)
-	- PlayerView
-	- SimpleExoplayer
-	- Player Lifecycle
-	- DataSouceFactory, MediaSourceFactory, MediaSource
-	- https://exoplayer.dev/
+
+  - PlayerView
+  - SimpleExoplayer
+  - Player Lifecycle
+
+  - DataSouceFactory, MediaSourceFactory, MediaSource
+  - https://exoplayer.dev/
 
 <br>
 
@@ -49,20 +53,17 @@
 2. [AppBarLayout](https://developer.android.com/reference/com/google/android/material/appbar/AppBarLayout)
 
    - Material design
-
-   - setScrollFlags
-
+   - SetScrollFlags
+   
 3. [CollapsingToolbarLayout](https://developer.android.com/reference/com/google/android/material/appbar/CollapsingToolbarLayout?hl=en)
 
    - Content scrim
-
    - Status bar scrim
-
+   
 4. [CoordinatorLayout](https://developer.android.com/reference/androidx/coordinatorlayout/widget/CoordinatorLayout)
 
    - Behaviors
-
-   - Inset
+- Inset
 
 <br>
 
@@ -77,3 +78,8 @@
    - AppWidgetProviderInfo
    - AppWidgetProvider
    - Layout
+
+<br>
+
+## Copyright
+
