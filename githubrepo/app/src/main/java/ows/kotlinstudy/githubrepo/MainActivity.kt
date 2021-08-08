@@ -1,21 +1,28 @@
 package ows.kotlinstudy.githubrepo
 
-import RetrofitUtil
 import android.content.Intent
-import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.view.isGone
 import kotlinx.coroutines.*
+import ows.kotlinstudy.githubrepo.data.database.DatabaseProvider
+import ows.kotlinstudy.githubrepo.data.entity.GithubOwner
+import ows.kotlinstudy.githubrepo.data.entity.GithubRepoEntity
 import ows.kotlinstudy.githubrepo.databinding.ActivityMainBinding
+import ows.kotlinstudy.githubrepo.view.RepositoryRecyclerAdapter
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var binding : ActivityMainBinding
 
-    var job: Job = Job()
+    private var job = Job()
+
+    private val repositoryDao by lazy { DatabaseProvider.provideDB(applicationContext).repositoryDao() }
+
+    private lateinit var adapter: RepositoryRecyclerAdapter
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -25,52 +32,76 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initAdapter()
         initViews()
+
     }
 
-    private fun initViews() = with(binding) {
-        loginButton.setOnClickListener {
-            loginGithub()
+    private fun initAdapter() {
+        adapter = RepositoryRecyclerAdapter()
+    }
+
+    private fun initViews() = with(binding){
+        recyclerView.adapter = adapter
+        searchButton.setOnClickListener {
+            startActivity(
+                Intent(this@MainActivity, SearchActivity::class.java)
+            )
         }
     }
 
-    // https://github.com/login/oauth/authorize?client_id=~~~
-    private fun loginGithub() {
-        val loginUri = Uri.Builder().scheme("https").authority("github.com")
-            .appendPath("login")
-            .appendPath("oauth")
-            .appendPath("authorize")
-            .appendQueryParameter("client_id",BuildConfig.GITHUB_CLIENT_ID)
-            .build()
-
-        CustomTabsIntent.Builder().build().also {
-            it.launchUrl(this, loginUri)
+    override fun onResume() {
+        super.onResume()
+        launch(coroutineContext) {
+            loadLikedRepositoryList()
         }
     }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
+    private suspend fun loadLikedRepositoryList() = withContext(Dispatchers.IO){
+        val repoList = repositoryDao.getHistory()
+        withContext(Dispatchers.Main){
+            setData(repoList)
+        }
+    }
 
-        Log.d("wonseok","onNewIntent")
-        intent.data?.getQueryParameter("code")?.let {
-            // getAccessToken
-            launch(coroutineContext) {
-                getAccessToken(it)
+    private fun setData(githubRepositoryList: List<GithubRepoEntity>) = with(binding){
+        if(githubRepositoryList.isEmpty()){
+            emptyResultTextView.isGone = false
+            recyclerView.isGone = true
+        }else{
+            emptyResultTextView.isGone = true
+            recyclerView.isGone = false
+            adapter.setSearchResultList(githubRepositoryList){
+                startActivity(
+                    Intent(this@MainActivity, RepositoryActivity::class.java).apply {
+                        putExtra(RepositoryActivity.REPOSITORY_OWNER_KEY, it.owner.login)
+                        putExtra(RepositoryActivity.REPOSITORY_NAME_KEY, it.name)
+                    }
+                )
             }
         }
     }
 
-    private suspend fun getAccessToken(code: String) = withContext(Dispatchers.IO){
-        val response = RetrofitUtil.authApiService.getAccessToken(
-            clientId = BuildConfig.GITHUB_CLIENT_ID,
-            clientSecret = BuildConfig.GITHUB_CLIENT_SECRET,
-            code = code
-        )
-
-        Log.d("wonseok","getAccessToken")
-        if(response.isSuccessful){
-            val accessToken = response.body()?.accessToken ?: ""
-            Log.d("wonseok", accessToken)
+    private suspend fun addMockData() = withContext(Dispatchers.IO) {
+        val mockData = (0 until 10).map{
+            GithubRepoEntity(
+                name = "repo $it",
+                fullName = "name $it",
+                owner = GithubOwner(
+                    "login",
+                    "avatarUrl"
+                ),
+                description = null,
+                language = null,
+                updatedAt = Date().toString(),
+                stargazersCount = it
+            )
         }
+        repositoryDao.insertAll(mockData)
+    }
+
+    private suspend fun loadGithubRepositories() = withContext(Dispatchers.IO){
+        val repositories = repositoryDao.getHistory()
+        return@withContext repositories
     }
 }

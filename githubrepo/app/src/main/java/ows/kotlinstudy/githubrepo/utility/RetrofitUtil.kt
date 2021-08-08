@@ -3,6 +3,7 @@ import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import ows.kotlinstudy.githubrepo.BuildConfig
+import ows.kotlinstudy.githubrepo.utility.GithubApiService
 import ows.kotlinstudy.githubrepository.data.Url
 import ows.kotlinstudy.githubrepository.utility.AuthApiService
 import retrofit2.Retrofit
@@ -16,6 +17,22 @@ object RetrofitUtil {
     private fun getGithubAuthRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Url.GITHUB_URL)
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create()
+                )
+            )
+            .client(buildOkHttpClient())
+            .build()
+    }
+
+    val githubApiService: GithubApiService by lazy { getGithubRetrofit().create(GithubApiService::class.java) }
+
+    private fun getGithubRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Url.GITHUB_API_URL)
             .addConverterFactory(
                 GsonConverterFactory.create(
                     GsonBuilder()
