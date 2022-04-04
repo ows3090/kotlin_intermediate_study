@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         loginButton.setOnClickListener {
             loginGithub()
         }
+
     }
 
     // https://github.com/login/oauth/authorize?client_id=~~~
