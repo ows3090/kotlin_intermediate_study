@@ -1,21 +1,15 @@
 
 ## Youtube
+1. MotionLayout
 
-1. [MotionLayout](https://developer.android.com/training/constraint-layout/motionlayout/examples?hl=ko)
+    - MotionScene : Transition, OnSwipe, ContraintSet, KeyFrameSet, KeyPosition, KeyAttribute
 
-  - ConstraintLayout Library SubClass
+2. Exoplayer
+   
+   - PlayerView, PlayerBuilder
+   - MediaSource, MediaSourceFractory
 
-  - Layout transition, Animation
-  - MotionScnen : Transition, KeyFrameSet, ConstraintSet, OnSwipe
-
-2. [Exoplayer](https://developer.android.com/guide/topics/media/exoplayer?hl=ko)
-
-  - PlayerView
-  - SimpleExoplayer
-  - Player Lifecycle
-
-  - DataSouceFactory, MediaSourceFactory, MediaSource
-  - https://exoplayer.dev/
+3. CustomView
 
 <br>
 

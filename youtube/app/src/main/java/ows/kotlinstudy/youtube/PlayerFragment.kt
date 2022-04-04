@@ -48,6 +48,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             MotionLayout.TransitionListener {
             override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
 
+            /**
+             * motionaLayout의 변경 시에 호출
+             * fragment_player UI가 변경될 때 메인 액티비티도 자동으로 변환되도록 호출
+             */
             override fun onTransitionChange(
                 motionLayout: MotionLayout?,
                 startId: Int,
@@ -105,6 +109,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     }
 
     private fun initPlayer(fragmentPlayerBinding: FragmentPlayerBinding) {
+        /**
+         * SimpleExoPlayer : 기본 Render를 사용하는 Exoplayer
+         */
         context?.let {
             player = SimpleExoPlayer.Builder(it).build()
         }
