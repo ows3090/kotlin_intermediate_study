@@ -16,7 +16,6 @@
 ## Melon
 
 1. Exoplayer
-  - Custom Controller
 2. androidx.constraintlayout.widget.Group
 3. Seekbar Custom
 

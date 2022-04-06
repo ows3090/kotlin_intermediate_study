@@ -1,5 +1,6 @@
 package ows.kotlinstudy.melon
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -38,6 +39,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
 
         val fragmentPlayerBinding = FragmentPlayerBinding.bind(view)
         binding = fragmentPlayerBinding
+
         initPlayListButton(fragmentPlayerBinding)
         initRecyclerView(fragmentPlayerBinding)
         initPlayControlButtons(fragmentPlayerBinding)
@@ -47,6 +49,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
         getVideoListFromServer()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initSeekBar(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playerSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {}
@@ -97,6 +100,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     super.onIsPlayingChanged(isPlaying)
 
+
                     if (isPlaying) {
                         binding.playControlImagView.setImageResource(R.drawable.ic_baseline_pause_24)
                     } else {
@@ -107,6 +111,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
                 override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                     super.onMediaItemTransition(mediaItem, reason)
 
+                    Log.d("msg","onMedaItemTransition")
                     val newIndex = mediaItem?.mediaId ?: return
                     model.currentPosition = newIndex.toInt()
                     updatePlayerView(model.currentMusicModel())
@@ -132,6 +137,9 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
 
         val state = player.playbackState
 
+        /**
+         * message queue에 있는 updateSeekRunnable은 전부 제거
+         */
         view?.removeCallbacks(updateSeekRunnable)
         if (state != Player.STATE_IDLE && state != Player.STATE_ENDED) {
             view?.postDelayed(updateSeekRunnable, 1000)
@@ -171,6 +179,9 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
         }
     }
 
+    /**
+     * 재생목록 <-> 상세 음악내역
+     */
     private fun initPlayListButton(fragmentPlayerBinding: FragmentPlayerBinding) {
         fragmentPlayerBinding.playlistImageView.setOnClickListener {
             if (model.currentPosition == -1) {
@@ -195,6 +206,9 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
         }
     }
 
+    /**
+     * 서버에서 음악 파일 가져오기
+     */
     private fun getVideoListFromServer() {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://run.mocky.io")
@@ -213,6 +227,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
 
                                 model = musicDto.mapper()
                                 setMusicList(model.getAdpaterModels())
+                                Log.d("msg","${model.getAdpaterModels()}")
                                 playListAdpater.submitList(model.getAdpaterModels())
                             }
                         }
@@ -239,7 +254,6 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
 
     private fun playMusic(musicModel: MusicModel) {
         model.updateCurrentPosition(musicModel)
-        Log.d("msg", "${model.currentPosition}")
         player?.seekTo(model.currentPosition, 0)
         player?.play()
     }
@@ -254,13 +268,18 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
     override fun onDestroy() {
         super.onDestroy()
 
+        view?.removeCallbacks(updateSeekRunnable)
         binding = null
         player?.release()
-        view?.removeCallbacks(updateSeekRunnable)
     }
 
     companion object {
-        // Fragment 생성은 안드로이드에 종속성이다 보니, 새로운 constructor 만들기 제약 -> newInstance로 객체 생성ㄹ
+        /**
+         * Fragment newInstance 권장되는 이유
+         * 안드로이드에서 다른 앱 실행으로 인해 메모리 부족할 경우 백그라운드인 프래그먼트 종료
+         * 다시 앱으로 복구 시 Fragment를 생성하는데 매개변수가 없는 기본 생성자로 생성
+         *
+         */
         fun newInstance(): PlayerFragment {
             return PlayerFragment()
         }

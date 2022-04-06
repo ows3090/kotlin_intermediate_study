@@ -51,6 +51,9 @@ class CustomMotionLayout(context: Context, attributeSet: AttributeSet? = null): 
 
     private val gestureListener by lazy {
         object: GestureDetector.SimpleOnGestureListener() {
+            /**
+             * 스크롤하면서 mainContainerView의 크기가 점점 늘어나기 때문
+             */
             override fun onScroll(
                 e1: MotionEvent,
                 e2: MotionEvent,
@@ -58,6 +61,10 @@ class CustomMotionLayout(context: Context, attributeSet: AttributeSet? = null): 
                 distanceY: Float
             ): Boolean {
                 Log.d("msg","onScroll")
+
+                /**
+                 * View에서 Rect 설정
+                 */
                 mainContainerView.getHitRect(hitRect)
                 return hitRect.contains(e1.x.toInt(), e1.y.toInt())
             }
@@ -68,6 +75,9 @@ class CustomMotionLayout(context: Context, attributeSet: AttributeSet? = null): 
         GestureDetector(context, gestureListener)
     }
 
+    /**
+     * View에 손 올리고 있을 떄 호출되는 콜백
+     */
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
         Log.d("msg","onInterceptTouchEvent")
         return gestureDetector.onTouchEvent(event)

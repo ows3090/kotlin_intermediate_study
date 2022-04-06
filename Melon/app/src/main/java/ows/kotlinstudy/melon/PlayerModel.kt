@@ -17,7 +17,8 @@ data class PlayerModel(
     }
 
     fun updateCurrentPosition(musicModel: MusicModel){
-        Log.d("msg","updateCurrentPosition ${playMusicList.indexOf(musicModel)}")
+        if(playMusicList.get(currentPosition).id == musicModel.id) return
+
         currentPosition = playMusicList.indexOf(musicModel)
     }
 
