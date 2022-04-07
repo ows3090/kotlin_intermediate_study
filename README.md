@@ -23,19 +23,9 @@
 
 ## Location Map
 
-1. [Google Map](https://developers.google.com/maps/documentation/android-skd/start?hl=ko) 
-   - SupportMapFragment
-   - OnMapReadyCallback
-   - Marker
-   - CameraUpdateFatory
-
+1. Google Map(https://developers.google.com/maps/documentation/android-skd/start?hl=ko) 
 2. LocationManager
-	- Permission : ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION
-
 3. Retrofit + Coroutine
-	- CorotineScope
-	- Job
-	- Dispatchers IO, Main
 
 <br>
 

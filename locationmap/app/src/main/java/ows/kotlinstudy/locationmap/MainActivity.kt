@@ -20,6 +20,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private lateinit var job: Job
 
+    /**
+     * CoroutineContext plus 연산자 정의되어 있음.
+     * Dispathers.Main : 메인스레드에 코루틴 실행 요청
+     * job : Job 객체를 하나 생성하여 하위의 Job 객체들이 여러 생성이 되어서 해당 job cancel 시 전체 job 종료
+     * -> structured concurrency
+     */
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
@@ -32,7 +38,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setContentView(binding.root)
 
         job = Job()
-
         initAdapter()
         initViews()
         bindViews()
@@ -82,19 +87,23 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     private fun searchKeyword(keywordString: String) {
         launch(coroutineContext) {
             try {
-                withContext(Dispatchers.IO) {
-                    val response = RetrofitUtil.apiService.getSearchLocation(
-                        keyword = keywordString
-                    )
+                /**
+                 * 원래 네트워크 요청은 Dispatchers.IO에게 하는게 맞으나, retrofit은 자체적으로 비동기 처리하기 때문에
+                 * 디스패처 설명할 필요없다. -> 자체 Dispatcher 사용
+                 */
+                val response = RetrofitUtil.apiService.getSearchLocation(
+                    keyword = keywordString
+                )
 
-                    if (response.isSuccessful) {
-                        val body = response.body()
-                        withContext(Dispatchers.Main) {
-                            body?.let { searchResponse ->
-                                Log.d("msg",body.toString())
-                                setData(searchResponse.searchPoiInfo.pois)
-                            }
-                        }
+                if (response.isSuccessful) {
+                    val body = response.body()
+
+                    /**
+                     * 이미 현재가 Dispathers.Main
+                     */
+                    body?.let { searchResponse ->
+                        Log.d("msg",body.toString())
+                        setData(searchResponse.searchPoiInfo.pois)
                     }
                 }
             } catch (e: Exception) {

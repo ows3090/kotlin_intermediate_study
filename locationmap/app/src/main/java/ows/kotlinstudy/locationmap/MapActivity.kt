@@ -70,6 +70,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
     private fun setupGoogleMap() {
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+
+        // mapFragment에 콜백 설정
         mapFragment.getMapAsync(this)
     }
 
@@ -90,14 +92,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             searchResultEntity.locationLatLng.latitude.toDouble(),
             searchResultEntity.locationLatLng.longitude.toDouble()
         )
-        val markerOptions = MarkerOptions().apply {
+        val markerOptions = MarkerOptions().apply {ㅇ
             position(positionLatLng)
             title(searchResultEntity.name)
             snippet(searchResultEntity.fullAddress)
         }
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(positionLatLng, CAMERA_ZOOM_LEVEL))
 
-        return map.addMarker(markerOptions)
+        return map.addMarker(markerOptions)!!
     }
 
     private fun getMyLocation() {
@@ -218,6 +220,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
 
     inner class MyLocationListener : LocationListener {
         override fun onLocationChanged(location: Location) {
+            Log.d("msg","onLocationChanged")
             val locationLatLngEntity = LocationLatLngEntity(
                 location.latitude.toFloat(),
                 location.longitude.toFloat()
