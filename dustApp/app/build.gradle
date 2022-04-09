@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 30
 
@@ -15,8 +18,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "KAKAO_API_KEY", project.properties["KAKAO_API_KEY"]
-        buildConfigField "String", "AIR_KOREA_SERVICE_KEY", project.properties["AIR_KOREA_SERVICE_KEY"]
+        buildConfigField "String", "KAKAO_API_KEY", properties["KAKAO_API_KEY"]
+        buildConfigField "String", "AIR_KOREA_SERVICE_KEY", properties["AIR_KOREA_SERVICE_KEY"]
     }
 
     buildTypes {

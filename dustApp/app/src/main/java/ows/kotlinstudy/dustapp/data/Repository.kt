@@ -12,6 +12,7 @@ import ows.kotlinstudy.dustapp.data.services.KaKaoLocalApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import java.util.concurrent.TimeUnit
 
 object Repository {
 
@@ -64,6 +65,7 @@ object Repository {
 
     private fun buildHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
+            .connectTimeout(10,TimeUnit.SECONDS)
             .addInterceptor(
                 HttpLoggingInterceptor().apply {
                     level = if(BuildConfig.DEBUG) {

@@ -2,13 +2,19 @@ package ows.kotlinstudy.dustapp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -25,7 +31,7 @@ import ows.kotlinstudy.dustapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private var cancellationTokenSource: CancellationTokenSource? = null
+    private var cancellationTokenSource: CancellationTokenSource? = null    // 위치 요청을 취소하기 위한 token
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val scope = MainScope()

@@ -92,7 +92,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback, CoroutineScope {
             searchResultEntity.locationLatLng.latitude.toDouble(),
             searchResultEntity.locationLatLng.longitude.toDouble()
         )
-        val markerOptions = MarkerOptions().apply {ㅇ
+        val markerOptions = MarkerOptions().apply {
             position(positionLatLng)
             title(searchResultEntity.name)
             snippet(searchResultEntity.fullAddress)

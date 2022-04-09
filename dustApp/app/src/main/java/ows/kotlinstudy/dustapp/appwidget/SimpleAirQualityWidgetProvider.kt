@@ -53,6 +53,7 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
 
         override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
+            // 권한 없을 경우
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION
@@ -71,6 +72,8 @@ class SimpleAirQualityWidgetProvider : AppWidgetProvider() {
 
                 return super.onStartCommand(intent, flags, startId)
             }
+
+            // 권한 있을 경우
             LocationServices.getFusedLocationProviderClient(this).lastLocation
                 .addOnSuccessListener { location ->
                     lifecycleScope.launch {
