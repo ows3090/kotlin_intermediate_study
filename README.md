@@ -1,14 +1,7 @@
 
 ## Youtube
 1. MotionLayout
-
-    - MotionScene : Transition, OnSwipe, ContraintSet, KeyFrameSet, KeyPosition, KeyAttribute
-
 2. Exoplayer
-   
-   - PlayerView, PlayerBuilder
-   - MediaSource, MediaSourceFractory
-
 3. CustomView
 
 <br>
@@ -23,7 +16,7 @@
 
 ## Location Map
 
-1. Google Map(https://developers.google.com/maps/documentation/android-skd/start?hl=ko) 
+1. Google Map
 2. LocationManager
 3. Retrofit + Coroutine
 
@@ -32,7 +25,6 @@
 ## OTT
 
 1. MotionLayout
-
 2. [AppBarLayout](https://developer.android.com/reference/com/google/android/material/appbar/AppBarLayout)
 
    - Material design
@@ -50,17 +42,12 @@
 
 <br>
 
-## Dust
-
-1. [LocationManager](https://developer.android.com/reference/android/location/LocationManager)
-   - ACCESS_COARSE_LOCATION
-   - ACCESS_FINE_LOCATION
+## DustApp
+1. LocationManager, LocationService   
 2. Retrofit2
 3. Coroutine
-4. [App Widgets](https://developer.android.com/guide/topics/appwidgets)
-   - AppWidgetProviderInfo
-   - AppWidgetProvider
-   - Layout
+4. AppWidget
+5. ForegroudService
 
 <br>
 
