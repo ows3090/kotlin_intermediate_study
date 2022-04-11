@@ -25,20 +25,9 @@
 ## OTT
 
 1. MotionLayout
-2. [AppBarLayout](https://developer.android.com/reference/com/google/android/material/appbar/AppBarLayout)
-
-   - Material design
-   - SetScrollFlags
-   
-3. [CollapsingToolbarLayout](https://developer.android.com/reference/com/google/android/material/appbar/CollapsingToolbarLayout?hl=en)
-
-   - Content scrim
-   - Status bar scrim
-   
-4. [CoordinatorLayout](https://developer.android.com/reference/androidx/coordinatorlayout/widget/CoordinatorLayout)
-
-   - Behaviors
-- Inset
+2. AppBarLayout
+3. CollaspingToobarLayout
+4. CoordinatorLayout
 
 <br>
 
