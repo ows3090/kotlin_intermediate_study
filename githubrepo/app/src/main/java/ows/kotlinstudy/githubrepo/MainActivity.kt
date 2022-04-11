@@ -17,9 +17,6 @@ import kotlin.coroutines.CoroutineContext
 class MainActivity : AppCompatActivity(), CoroutineScope {
 
         private lateinit var binding : ActivityMainBinding
-        private val x = String
-        private val y : String
-            get() = ""
 
         private var job = Job()
 
@@ -35,10 +32,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             binding = ActivityMainBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
-            y = "string"
             initAdapter()
             initViews()
-
         }
 
         private fun initAdapter() {

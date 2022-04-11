@@ -64,30 +64,8 @@
 
 ## GithubRepository
 
-1. [Coroutine](https://developer.android.com/kotlin/coroutines)
-   - [Dispatchers.IO, Dispatchers.Main](https://developer.android.com/kotlin/coroutines/coroutines-adv)
-   - Job
-   - CorotineScope
+1. Coroutine
 2. Glide
 3. Room
 4. Retrofit
-   - @Post 
-   - @Field vs @Body
-   - @Path
 5. Extension
-   - [DisplayMetrics](https://developer.android.com/reference/android/util/DisplayMetrics)
-
-<br>
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -96,6 +96,7 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private suspend fun getAccessToken(code: String) = withContext(Dispatchers.IO) {
+        Log.d("msg","getAccessToekn ${code}")
         val response = RetrofitUtil.authApiService.getAccessToken(
             clientId = BuildConfig.GITHUB_CLIENT_ID,
             clientSecret = BuildConfig.GITHUB_CLIENT_SECRET,
@@ -105,13 +106,14 @@ class SignInActivity : AppCompatActivity(), CoroutineScope {
         //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
         if (response.isSuccessful) {
             val accessToken = response.body()?.accessToken ?: ""
-            Log.d("msg", accessToken)
             if (accessToken.isNotEmpty()) {
                 authTokenProvider.updateToken(accessToken)
             } else {
                 Toast.makeText(this@SignInActivity, "accessToken이 존재하지 않습니다", Toast.LENGTH_SHORT)
                     .show()
             }
+        }else{
+            Log.d("msg","getAcessToken error")
         }
     }
 }
