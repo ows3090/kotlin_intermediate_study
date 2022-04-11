@@ -56,11 +56,9 @@
 1. Retrofit2
 2. Coroutine
 3. Glide
-4. [ShimmerLayout](https://facebook.github.io/shimmer-android/)
-5. [WallpaperManager](https://developer.android.com/reference/android/app/WallpaperManager)
-   - isWallpaperSupported, isSetWallpaperAllowed
-   - setBitmap, IOException
-6. [MediaStore API](https://developer.android.com/training/data-storage/shared) 
+4. ShimmerLayout
+5. Wallpaper   
+6. MediaStore API
 
 <br>
 
